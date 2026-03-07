@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Zen Tuner</string>
+    <string name="permission_dialog_title">Требуется доступ к микрофону</string>
+    <string name="permission_dialog_message">Чтобы определять высоту тона, приложению нужен доступ к микрофону. Пожалуйста, включите его в настройках приложения.</string>
+    <string name="permission_dialog_settings">Перейти в настройки</string>
+    <string name="permission_dialog_cancel">Отмена</string>
+</resources>

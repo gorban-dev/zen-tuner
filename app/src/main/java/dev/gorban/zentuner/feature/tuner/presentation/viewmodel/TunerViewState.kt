@@ -7,5 +7,8 @@ data class TunerViewState(
     val amplitude: Double = 0.0,
     val isListening: Boolean = false,
     val amplitudeThreshold: Double = 0.003,
-    val hasPermission: Boolean = false
+    val hasPermission: Boolean = false,
+    val showSettingsDialog: Boolean = false,
+    val permissionDenialCount: Int = 0,
+    val sentToSettings: Boolean = false
 )

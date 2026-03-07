@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Zen Tuner</string>
+    <string name="permission_dialog_title">Microphone access required</string>
+    <string name="permission_dialog_message">To detect pitch, the app needs access to the microphone. Please enable it in the app settings.</string>
+    <string name="permission_dialog_settings">Go to Settings</string>
+    <string name="permission_dialog_cancel">Cancel</string>
 </resources>

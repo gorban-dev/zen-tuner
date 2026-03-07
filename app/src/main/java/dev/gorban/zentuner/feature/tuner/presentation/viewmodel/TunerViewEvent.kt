@@ -5,4 +5,7 @@ sealed class TunerViewEvent {
     data class UpdateThreshold(val threshold: Double) : TunerViewEvent()
     object PermissionGranted : TunerViewEvent()
     object PermissionDenied : TunerViewEvent()
+    object SettingsDialogDismissed : TunerViewEvent()
+    object OpenedSettings : TunerViewEvent()
+    data class PermissionRecheck(val hasPermission: Boolean) : TunerViewEvent()
 }

@@ -17,6 +17,7 @@ class TunerViewModel(
 ) {
 
     private var pitchJob: Job? = null
+    private var pendingStart = false
 
     override fun obtainEvent(viewEvent: TunerViewEvent) {
         when (viewEvent) {
@@ -24,17 +25,29 @@ class TunerViewModel(
             is TunerViewEvent.UpdateThreshold -> updateThreshold(viewEvent.threshold)
             is TunerViewEvent.PermissionGranted -> onPermissionGranted()
             is TunerViewEvent.PermissionDenied -> onPermissionDenied()
+            is TunerViewEvent.SettingsDialogDismissed -> onSettingsDialogDismissed()
+            is TunerViewEvent.OpenedSettings -> onOpenedSettings()
+            is TunerViewEvent.PermissionRecheck -> onPermissionRecheck(viewEvent.hasPermission)
         }
     }
 
     private fun toggleListening() {
-        if (!viewState.hasPermission) return
-
         if (viewState.isListening) {
             stopListening()
-        } else {
-            startListening()
+            return
         }
+
+        if (!viewState.hasPermission) {
+            if (viewState.permissionDenialCount >= 2) {
+                viewState = viewState.copy(showSettingsDialog = true)
+            } else {
+                pendingStart = true
+                viewAction = TunerViewAction.RequestPermission()
+            }
+            return
+        }
+
+        startListening()
     }
 
     private fun startListening() {
@@ -71,15 +84,41 @@ class TunerViewModel(
     }
 
     private fun onPermissionGranted() {
-        viewState = viewState.copy(hasPermission = true)
+        viewState = viewState.copy(hasPermission = true, permissionDenialCount = 0)
+        if (pendingStart) {
+            pendingStart = false
+            startListening()
+        }
     }
 
     private fun onPermissionDenied() {
-        viewState = viewState.copy(hasPermission = false, isListening = false)
+        val newCount = viewState.permissionDenialCount + 1
+        viewState = viewState.copy(
+            hasPermission = false,
+            isListening = false,
+            permissionDenialCount = newCount
+        )
+        pendingStart = false
         pitchJob?.cancel()
         pitchJob = null
         viewModelScope.launch {
             stopTunerUseCase.execute(Unit)
+        }
+    }
+
+    private fun onSettingsDialogDismissed() {
+        viewState = viewState.copy(showSettingsDialog = false)
+    }
+
+    private fun onOpenedSettings() {
+        viewState = viewState.copy(sentToSettings = true)
+    }
+
+    private fun onPermissionRecheck(hasPermission: Boolean) {
+        if (hasPermission) {
+            viewState = viewState.copy(hasPermission = true, permissionDenialCount = 0, sentToSettings = false)
+        } else if (viewState.sentToSettings) {
+            viewState = viewState.copy(permissionDenialCount = 0, sentToSettings = false)
         }
     }
 
