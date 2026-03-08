@@ -1,4 +1,6 @@
 [versions]
+appVersionCode = "1"
+appVersionName = "1.0.0"
 agp = "9.1.0"
 coreKtx = "1.17.0"
 junit = "4.13.2"
@@ -12,9 +14,9 @@ composeBom = "2026.02.01"
 koin = "4.1.1"
 coroutinesTest = "1.10.2"
 mockk = "1.14.9"
-firebaseBom = "33.12.0"
-googleServices = "4.4.2"
-firebaseCrashlytics = "3.0.4"
+firebaseBom = "34.10.0"
+googleServices = "4.4.4"
+firebaseCrashlytics = "3.0.6"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -37,8 +39,8 @@ koin-compose = { group = "io.insert-koin", name = "koin-androidx-compose", versi
 kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutinesTest" }
 mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
 firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBom" }
-firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics-ktx" }
-firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics-ktx" }
+firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics" }
+firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

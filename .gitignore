@@ -3,6 +3,7 @@
 .idea/
 .kotlin/
 local.properties
+signing.properties
 
 .DS_Store
 /build
