@@ -11,7 +11,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.Fill
@@ -21,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import dev.gorban.zentuner.feature.tuner.domain.model.SymbolSegment
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlin.random.Random
 
 
 private val segmentMapping = mapOf(
@@ -47,24 +47,28 @@ fun SegmentedSymbol(
 
     val activeSegments = segmentMapping[symbol] ?: emptySet()
     val segmentAlphas = remember { Array(56) { Animatable(0f) } }
+    val loadingAlphas = remember { Array(loadingSegments.size) { Animatable(0f) } }
 
     var loadingIndex by remember { mutableIntStateOf(0) }
 
     LaunchedEffect(symbol) {
         if (symbol == SymbolSegment.NONE) {
+            // Staggered fade-out with random delays (like iOS)
             for (i in 1..55) {
+                val delayMs = Random.nextInt(120).toLong()
                 launch {
-                    segmentAlphas[i].animateTo(0f, tween(120))
+                    delay(delayMs)
+                    segmentAlphas[i].animateTo(0f, tween(100))
                 }
             }
             return@LaunchedEffect
         }
 
-        val random = java.util.Random()
+        // Staggered fade-in for new symbol
         for (i in 1..55) {
             val isActive = i in activeSegments
             val targetAlpha = if (isActive) 1f else 0f
-            val delayMs = random.nextInt(120).toLong()
+            val delayMs = Random.nextInt(120).toLong()
             launch {
                 delay(delayMs)
                 segmentAlphas[i].animateTo(targetAlpha, tween(80))
@@ -77,17 +81,29 @@ fun SegmentedSymbol(
             while (true) {
                 for (idx in loadingSegments.indices) {
                     loadingIndex = idx
+                    // Animate previous segment out and current segment in (like iOS easeInOut 0.4)
+                    for (j in loadingAlphas.indices) {
+                        launch {
+                            loadingAlphas[j].animateTo(
+                                if (j == idx) 1f else 0f,
+                                tween(400)
+                            )
+                        }
+                    }
                     delay(200)
+                }
+            }
+        } else {
+            // Fade out all loading segments when leaving NONE
+            for (j in loadingAlphas.indices) {
+                launch {
+                    loadingAlphas[j].animateTo(0f, tween(100))
                 }
             }
         }
     }
 
-    val loadingAlphas = if (symbol == SymbolSegment.NONE) {
-        loadingSegments.mapIndexed { idx, _ -> if (idx == loadingIndex) 1f else 0f }
-    } else {
-        emptyList()
-    }
+    val segmentColor = if (isInTune && symbol != SymbolSegment.NONE) Color(0xFF4CAF50) else color
 
     Canvas(modifier = modifier.size(symbolWidth, symbolHeight)) {
         val w = size.width
@@ -96,22 +112,14 @@ fun SegmentedSymbol(
         for (i in 1..55) {
             val alpha = if (symbol == SymbolSegment.NONE) {
                 val loadingIdx = loadingSegments.indexOf(i)
-                if (loadingIdx >= 0) loadingAlphas.getOrElse(loadingIdx) { 0f } else 0f
+                if (loadingIdx >= 0) loadingAlphas[loadingIdx].value else 0f
             } else {
                 segmentAlphas[i].value
             }
-            val segColor = color.copy(alpha = alpha)
+            val fillColor = segmentColor.copy(alpha = alpha)
             val path = buildSegmentPath(i, w, h)
-            drawPath(path, segColor, style = Fill)
+            drawPath(path, fillColor, style = Fill)
             drawPath(path, Color.Black, style = Stroke(width = 2f))
-        }
-
-        if (isInTune && symbol != SymbolSegment.NONE) {
-            drawRect(
-                color = Color(0xFF4CAF50).copy(alpha = 0.4f),
-                size = size,
-                blendMode = BlendMode.Multiply
-            )
         }
     }
 }

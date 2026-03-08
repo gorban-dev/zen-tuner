@@ -25,22 +25,33 @@ class PitchDetector {
             autocorrelation[lag - minLag] = sum
         }
 
+        // Find global maximum value for threshold calculation
+        var maxValue = 0f
+        for (v in autocorrelation) {
+            if (v > maxValue) maxValue = v
+        }
+        if (maxValue <= 0f) return null
+
+        // Find the first significant peak above threshold (standard pitch detection approach)
+        // This avoids octave errors by preferring the fundamental frequency
+        val threshold = maxValue * 0.8f
         var peakIndex = -1
         var peakValue = 0f
         for (i in 1 until acSize - 1) {
             if (autocorrelation[i] > autocorrelation[i - 1] &&
                 autocorrelation[i] > autocorrelation[i + 1] &&
-                autocorrelation[i] > peakValue
+                autocorrelation[i] > threshold
             ) {
-                peakValue = autocorrelation[i]
                 peakIndex = i
+                peakValue = autocorrelation[i]
+                break
             }
         }
 
-        if (peakIndex < 0 || peakValue <= 0f) return null
+        if (peakIndex < 0) return null
 
         val lag = peakIndex + minLag
-        val refinedLag = if (peakIndex < acSize - 1) {
+        val refinedLag = if (peakIndex > 0 && peakIndex < acSize - 1) {
             val y0 = autocorrelation[peakIndex - 1].toDouble()
             val y1 = autocorrelation[peakIndex].toDouble()
             val y2 = autocorrelation[peakIndex + 1].toDouble()
