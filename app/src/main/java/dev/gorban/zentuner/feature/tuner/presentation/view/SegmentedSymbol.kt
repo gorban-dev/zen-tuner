@@ -179,7 +179,7 @@ private fun buildSegmentPath(index: Int, w: Float, h: Float): Path {
             moveTo(w, 0.25f * h)
             lineTo(0.66667f * w, 0.25f * h)
             lineTo(0.66667f * w, 0.375f * h)
-            cubicTo(0.81752f * w, 0.40518f * h, 0.86498f * w, 0.44331f * h, 0.86498f * w, 0.44331f * h)
+            cubicTo(0.75319f * w, 0.37822f * h, 0.81752f * w, 0.40518f * h, 0.86498f * w, 0.44331f * h)
             cubicTo(w, 0.36798f * h, w, 0.25f * h, w, 0.25f * h)
             close()
         }
@@ -193,7 +193,7 @@ private fun buildSegmentPath(index: Int, w: Float, h: Float): Path {
         10 -> Path().apply {
             moveTo(0.66667f * w, 0.375f * h)
             lineTo(0.66667f * w, 0.5f * h)
-            cubicTo(0.81752f * w, 0.46983f * h, 0.86498f * w, 0.44331f * h, 0.86498f * w, 0.44331f * h)
+            cubicTo(0.75319f * w, 0.49106f * h, 0.81752f * w, 0.46983f * h, 0.86498f * w, 0.44331f * h)
             cubicTo(0.81752f * w, 0.40518f * h, 0.75319f * w, 0.37822f * h, 0.66667f * w, 0.375f * h)
             close()
         }
@@ -201,8 +201,8 @@ private fun buildSegmentPath(index: Int, w: Float, h: Float): Path {
             moveTo(0.86498f * w, 0.44331f * h)
             cubicTo(0.81752f * w, 0.46983f * h, 0.75319f * w, 0.49106f * h, 0.66667f * w, 0.5f * h)
             cubicTo(0.75398f * w, 0.50613f * h, 0.81859f * w, 0.5263f * h, 0.86627f * w, 0.55271f * h)
-            cubicTo(0.90365f * w, 0.51784f * h, 0.88627f * w, 0.53623f * h, 0.91787f * w, 0.49849f * h)
-            cubicTo(0.88577f * w, 0.45993f * h, 0.90333f * w, 0.47867f * h, 0.86498f * w, 0.44331f * h)
+            cubicTo(0.88627f * w, 0.53623f * h, 0.90365f * w, 0.51784f * h, 0.91787f * w, 0.49849f * h)
+            cubicTo(0.90333f * w, 0.47867f * h, 0.88577f * w, 0.45993f * h, 0.86498f * w, 0.44331f * h)
             close()
         }
         12 -> Path().apply {
@@ -222,7 +222,7 @@ private fun buildSegmentPath(index: Int, w: Float, h: Float): Path {
         14 -> Path().apply {
             moveTo(0.66667f * w, 0.5f * h)
             lineTo(0.66667f * w, 0.625f * h)
-            cubicTo(0.81859f * w, 0.59167f * h, 0.86627f * w, 0.55271f * h, 0.86627f * w, 0.55271f * h)
+            cubicTo(0.75398f * w, 0.61995f * h, 0.81859f * w, 0.59167f * h, 0.86627f * w, 0.55271f * h)
             cubicTo(0.81859f * w, 0.5263f * h, 0.75398f * w, 0.50613f * h, 0.66667f * w, 0.5f * h)
             close()
         }
@@ -253,7 +253,7 @@ private fun buildSegmentPath(index: Int, w: Float, h: Float): Path {
             moveTo(0.33333f * w, 0.5f * h)
             cubicTo(0.24648f * w, 0.49106f * h, 0.18235f * w, 0.46983f * h, 0.13484f * w, 0.44331f * h)
             cubicTo(0.11418f * w, 0.45993f * h, 0.09663f * w, 0.47867f * h, 0.08179f * w, 0.49849f * h)
-            cubicTo(0.11343f * w, 0.53623f * h, 0.09635f * w, 0.51784f * h, 0.13355f * w, 0.55271f * h)
+            cubicTo(0.09635f * w, 0.51784f * h, 0.11343f * w, 0.53623f * h, 0.13355f * w, 0.55271f * h)
             cubicTo(0.18117f * w, 0.5263f * h, 0.24571f * w, 0.50613f * h, 0.33333f * w, 0.5f * h)
             close()
         }
@@ -266,17 +266,17 @@ private fun buildSegmentPath(index: Int, w: Float, h: Float): Path {
         }
         20 -> Path().apply {
             moveTo(0.13355f * w, 0.55271f * h)
-            cubicTo(0.09635f * w, 0.51784f * h, 0.11343f * w, 0.53623f * h, 0.08179f * w, 0.49849f * h)
-            cubicTo(0.03232f * w, 0.58428f * h, 0.05141f * w, 0.53912f * h, 0.02031f * w, 0.625f * h)
+            cubicTo(0.11343f * w, 0.53623f * h, 0.09635f * w, 0.51784f * h, 0.08179f * w, 0.49849f * h)
+            cubicTo(0.05141f * w, 0.53912f * h, 0.03232f * w, 0.58428f * h, 0.02031f * w, 0.625f * h)
             lineTo(0.04807f * w, 0.625f * h)
-            cubicTo(0.09501f * w, 0.57409f * h, 0.06759f * w, 0.59958f * h, 0.13355f * w, 0.55271f * h)
+            cubicTo(0.06759f * w, 0.59958f * h, 0.09501f * w, 0.57409f * h, 0.13355f * w, 0.55271f * h)
             close()
         }
         21 -> Path().apply {
             moveTo(0f, 0.25f * h)
             lineTo(0f, 0.625f * h)
             lineTo(0.02031f * w, 0.625f * h)
-            cubicTo(0.05141f * w, 0.53912f * h, 0.03232f * w, 0.58428f * h, 0.08179f * w, 0.49849f * h)
+            cubicTo(0.03232f * w, 0.58428f * h, 0.05141f * w, 0.53912f * h, 0.08179f * w, 0.49849f * h)
             cubicTo(0f, 0.38948f * h, 0f, 0.25f * h, 0f, 0.25f * h)
             close()
         }

@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.width
@@ -272,7 +273,12 @@ private fun TunerGaugeWithNote(
                         fontWeight = FontWeight.Bold,
                         fontFamily = FontFamily.Serif
                     ),
-                    modifier = Modifier.padding(start = symbolWidth * 1.33f)
+                    modifier = Modifier
+                        .align(Alignment.TopEnd)
+                        .offset(
+                            x = symbolWidth * 0.35f,
+                            y = symbolHeight * 0.05f
+                        )
                 )
             }
         }
