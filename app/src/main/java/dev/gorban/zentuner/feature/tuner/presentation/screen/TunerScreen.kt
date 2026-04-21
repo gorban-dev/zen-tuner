@@ -1,13 +1,16 @@
 package dev.gorban.zentuner.feature.tuner.presentation.screen
 
 import android.Manifest
+import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.provider.Settings
+import android.view.WindowManager
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
@@ -56,6 +59,16 @@ fun TunerScreen() {
             }
             is TunerViewAction.ShowSettingsDialog -> {}
             else -> Unit
+        }
+    }
+
+    DisposableEffect(viewState.isListening) {
+        val window = (context as? Activity)?.window
+        if (viewState.isListening) {
+            window?.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+        }
+        onDispose {
+            window?.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         }
     }
 
