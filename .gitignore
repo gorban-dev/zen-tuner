@@ -25,3 +25,4 @@ signing.properties
 
 # Worktrees
 .worktrees/
+/docs/
