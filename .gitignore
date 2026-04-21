@@ -22,3 +22,6 @@ signing.properties
 *.hprof
 *.log
 /app/google-services.json
+
+# Worktrees
+.worktrees/
